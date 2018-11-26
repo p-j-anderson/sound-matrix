@@ -51,7 +51,6 @@ class SoundMatrix extends Component {
     fetch('api/v1/stats/sound-matrix')
       .then(res => res.json())
       .then(res => {
-        console.log('still got a response')
         this.setState({ globalLoops: res.data[0].count })
       })
       // If an error occurs, provide a random number
@@ -60,9 +59,9 @@ class SoundMatrix extends Component {
 
   submitCount() {
     // Submit accumulated loop count to stats
-    fetch('/api/v1/stats', {
+    fetch('/api/v1/stats/sound-matrix', {
       method: 'POST',
-      body: JSON.stringify({ project: 'sound-matrix', count: this.state.loopCount }),
+      body: JSON.stringify({ count: this.state.loopCount }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -94,7 +93,7 @@ class SoundMatrix extends Component {
         active: square.active,
         handleClick: this.handleSquareClick,
         beat: square.beat,
-        current: (square.beat === this.state.beat ? true : false),
+        current: (square.beat === this.state.beat),
         sound: square.sound,
         colors: square.colors,
         baseColor: this.state.baseColors[0]
@@ -175,7 +174,7 @@ class SoundMatrix extends Component {
   changeScale(e) {
     let scales = this.state.scales
     if (e.target.name === 'increase') {
-       scales.push(scales.shift())
+      scales.push(scales.shift())
     } else if (e.target.name === 'decrease') {
       scales.unshift(scales.pop())
     }
@@ -188,7 +187,7 @@ class SoundMatrix extends Component {
   changeActiveColor(e) {
     let colors = this.state.activeColors
     if (e.target.name === 'increase') {
-       colors.push(colors.shift())
+      colors.push(colors.shift())
     } else if (e.target.name === 'decrease') {
       colors.unshift(colors.pop())
     }
@@ -201,7 +200,7 @@ class SoundMatrix extends Component {
   changeBackgroundColor(e) {
     let backgrounds = this.state.backgrounds
     if (e.target.name === 'increase') {
-       backgrounds.push(backgrounds.shift())
+      backgrounds.push(backgrounds.shift())
     } else if (e.target.name === 'decrease') {
       backgrounds.unshift(backgrounds.pop())
     }
@@ -213,7 +212,7 @@ class SoundMatrix extends Component {
   changeBaseColor(e) {
     let baseColor = this.state.baseColors
     if (e.target.name === 'increase') {
-       baseColor.push(baseColor.shift())
+      baseColor.push(baseColor.shift())
     } else if (e.target.name === 'decrease') {
       baseColor.unshift(baseColor.pop())
     }
@@ -271,5 +270,7 @@ class SoundMatrix extends Component {
   }
 }
 
-// Renders the SoundMatrix component on the id, root.
-ReactDOM.render(<SoundMatrix />, document.getElementById('root'))
+// Renders the SoundMatrix component if correct ID is found
+if (document.getElementById('sound-matrix-component')) {
+  ReactDOM.render(<SoundMatrix />, document.getElementById('sound-matrix-component'))
+}

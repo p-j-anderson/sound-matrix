@@ -135,7 +135,6 @@ export const getBackgrounds = () => {
     'SteelBlue',
     'SkyBlue',
     'RoyalBlue',
-    'Navy',
-
+    'Navy'
   ]
 }

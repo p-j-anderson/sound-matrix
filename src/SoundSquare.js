@@ -6,10 +6,8 @@ const SoundSquare = props => {
 
   // Adjust the color as needed
   if (props.current && props.active) {
-    //color = beatColor
     color = props.colors.beat
   } else if (props.active) {
-    //color = activeColor
     color = props.colors.active
   }
 
@@ -34,7 +32,7 @@ const SoundSquare = props => {
 
   // Return the stylized div
   return (
-    <div 
+    <div
       className="btn"
       style={squareStyle}
       id={props.key}
