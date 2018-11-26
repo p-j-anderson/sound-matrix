@@ -48,7 +48,7 @@ class SoundMatrix extends Component {
     window.addEventListener('beforeunload', this.submitCount)
 
     // Get total loop count
-    fetch('api/v1/stats/sound-matrix')
+    fetch('/api/v1/stats/sound-matrix')
       .then(res => res.json())
       .then(res => {
         this.setState({ globalLoops: res.data[0].count })
@@ -61,7 +61,7 @@ class SoundMatrix extends Component {
     // Submit accumulated loop count to stats
     fetch('/api/v1/stats/sound-matrix', {
       method: 'POST',
-      body: JSON.stringify({ count: this.state.loopCount }),
+      body: JSON.stringify({ count: this.state.loopCount, _csrf: document.getElementById('_csrf').value }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -163,9 +163,9 @@ class SoundMatrix extends Component {
   changeSpeed(e) {
     let speed = this.state.speed
     if (e.target.name === 'increase') {
-      speed = (speed > 50 ? (speed - 10) : 50)
+      speed = (speed > 50 ? (speed - 5) : 50)
     } else if (e.target.name === 'decrease') {
-      speed = (speed < 600 ? (speed + 10) : 600)
+      speed = (speed < 600 ? (speed + 5) : 600)
     }
 
     this.setState({ speed })
@@ -246,7 +246,7 @@ class SoundMatrix extends Component {
 
   render() {
     return (
-      <div className="text-center mt-5 container">
+      <div className="text-center container">
 
         {this.renderMenu()}
 
